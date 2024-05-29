@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: python-app-container
+        
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ENV_VARIABLE
+          value: "value"
+        volumeMounts:
+        - mountPath: /app/config
+          name: config-volume
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
